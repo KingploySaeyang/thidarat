@@ -29,11 +29,14 @@
     }
     .curtain-hidden { opacity: 0; visibility: hidden; pointer-events: none; transform: scale(1.1); }
 
-    /* ☁️ ก้อนเมฆลอยละล่อง */
+    /* ☁️ ก้อนเมฆยิ้มได้ */
     .cloud {
       position: absolute; background: white; border-radius: 50px; opacity: 0.6;
       animation: floatCloud linear infinite; z-index: 1; pointer-events: none;
+      display: flex; align-items: center; justify-content: center;
     }
+    .cloud::before { content: '• ◡ •'; color: #ff99cc; font-size: 14px; font-weight: bold; }
+
     @keyframes floatCloud { from { transform: translateX(-150px); } to { transform: translateX(110vw); } }
 
     /* 🌸 กลีบดอกไม้ */
@@ -43,13 +46,22 @@
     }
     @keyframes fall { from { transform: translateY(-10vh) rotate(0deg); opacity: 1; } to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
 
+    /* ✨ Cursor Trail */
+    .sparkle {
+      position: fixed; pointer-events: none; z-index: 99999;
+      font-size: 20px; animation: sparkleFade 0.8s forwards;
+    }
+    @keyframes sparkleFade {
+      0% { transform: scale(0) rotate(0deg); opacity: 1; }
+      100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+    }
+
     /* 🎂 เค้ก 2 ชั้น */
     .cake-container { 
       position: relative; z-index: 5; filter: drop-shadow(0 20px 40px rgba(255, 105, 180, 0.4));
       display: flex; flex-direction: column; align-items: center; transition: transform 0.3s;
     }
-    .cake-container:hover { transform: translateY(-5px); }
-
+    
     .tier { position: relative; border: 3px solid #fff; display: flex; justify-content: center; }
     .tier-1 { width: 130px; height: 90px; background: var(--cake-top); border-radius: 20px 20px 5px 5px; z-index: 6; }
     .tier-1:after { content: ""; position: absolute; top: 0; width: 100%; height: 30px; background: #fff; border-radius: 20px 20px 25px 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
@@ -70,7 +82,7 @@
     }
     .flame.off { display: none; }
 
-    /* ควันเทียนหลังดับ */
+    /* 💨 ควันเทียนหลังดับ */
     .smoke {
       position: absolute; top: -30px; left: 50%; width: 4px; height: 4px; 
       background: rgba(200,200,200,0.8); border-radius: 50%; opacity: 0;
@@ -81,9 +93,7 @@
       100% { transform: translate(-50%, -100px) scale(4); opacity: 0; filter: blur(5px); }
     }
 
-    @keyframes flicker { from { transform: translateX(-50%) scale(1); opacity: 0.9; } to { transform: translateX(-50%) scale(1.2); opacity: 1; } }
-
-    /* 💌 ข้อความพิมพ์ดีด */
+    /* 💌 ข้อความ */
     .message { 
       margin-top: 40px; text-align: center; z-index: 5; opacity: 0;
       background: rgba(255, 255, 255, 0.55); padding: 25px 35px; border-radius: 30px;
@@ -95,18 +105,42 @@
 
     #hint { font-weight: bold; color: var(--primary); animation: pulse 1.2s infinite; font-size: 1.4rem; text-shadow: 0 2px 10px rgba(255,255,255,1); }
     @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); opacity: 0.8; } }
+
+    /* 🐰 Peeking Bunny */
+    .bunny {
+      position: absolute; bottom: 85px; right: 20px; font-size: 40px;
+      transform: translateY(100%); transition: transform 0.5s ease; z-index: 4;
+    }
+    .bunny-peek { transform: translateY(0); }
+
+    /* 🎁 Floating Gift */
+    .gift {
+      position: absolute; bottom: -50px; font-size: 30px; cursor: pointer;
+      animation: giftFloat linear forwards; z-index: 3;
+    }
+    @keyframes giftFloat { from { bottom: -50px; } to { bottom: 110vh; transform: rotate(360deg); } }
+
+    /* Screen Shake */
+    .shake { animation: screenShake 0.5s; }
+    @keyframes screenShake {
+      0%, 100% { transform: translate(0,0); }
+      10%, 30%, 50%, 70%, 90% { transform: translate(-5px, 2px); }
+      20%, 40%, 60%, 80% { transform: translate(5px, -2px); }
+    }
   </style>
 </head>
-<body onclick="startAll()">
+<body onclick="startAll()" onmousemove="createSparkle(event)" ontouchmove="createSparkle(event)">
 
   <div id="overlay-curtain">
-    <div id="hint">👆 จิ้มหน้าจอเพื่อเริ่มเซอร์ไพรส์นะ</div>
-    <p style="margin-top:15px; font-size: 0.9rem; color: #888;">(อย่าลืมเปิดเสียงด้วยนะคนสวย)</p>
+    <div id="hint">✨ แตะหน้าจอเพื่อเปิดเซอร์ไพร์ส ✨</div>
+    <p style="margin-top:15px; font-size: 0.9rem; color: #888;">(แนะนำให้เปิดเสียงด้วยนะคนสวย)</p>
   </div>
 
   <audio id="bdaySong" loop>
     <source src="hook.mp3" type="audio/mpeg">
   </audio>
+
+  <div class="bunny" id="bunny">🐰</div>
 
   <div class="cake-container" id="parallax-box">
     <div class="candle" id="candle" onclick="extinguish(event)">
@@ -118,18 +152,18 @@
   </div>
 
   <div class="message" id="msg-box">
-    <h1 style="color: var(--primary); margin-bottom: 5px;" id="typewriter-h1">✨ แฮปปี้ 25 ปีจ้า อิอุ ✨</h1>
+    <h1 style="color: var(--primary); margin-bottom: 5px;">✨ แฮปปี้ 25 ปีจ้า อิอุ ✨</h1>
     <p style="font-size: 1.1rem; color: #4a3a45; margin: 0; line-height: 1.7;">
-        โตขึ้นเป็นอีแก่ที่มีคุณภาพ <br>
-        เป็น 25 ปีที่มีความสุข ทุกอย่างราบรื่น <br>
-        ขอบคุณที่เกิดมาเป็นพี่ฉัน อิอิ 💖 <br>
-        <span style="display:block; margin-top:10px; font-size: 0.9rem; color: var(--primary); font-weight: bold;">🌬️ ลองเป่าเทียนดูสิ! (จิ้มที่เทียน)</span>
+        โตขึ้นเป็นอีแก่ที่มีคุณภาพที่สุดเลยนะ <br>
+        ขอให้เป็นปีที่มีรอยยิ้ม และความสุขในทุกๆ วัน <br>
+        ขอบคุณที่เกิดมาเป็นพี่ฉันนะคนสวย 💖 <br>
+        <span style="display:block; margin-top:10px; font-size: 0.9rem; color: var(--primary); font-weight: bold;">🌬️ จิ้มที่เทียนเพื่อเป่าเค้กดูสิ!</span>
     </p>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script>
-    // สร้างก้อนเมฆและกลีบซากุระสุ่ม
+    // สร้างของตกแต่งพื้นหลัง
     function initDecoration() {
       for(let i=0; i<6; i++) {
         let cloud = document.createElement('div');
@@ -141,18 +175,48 @@
         cloud.style.animationDelay = Math.random() * -20 + 's';
         document.body.appendChild(cloud);
       }
-      for(let i=0; i<30; i++) {
+      setInterval(() => {
         let petal = document.createElement('div');
         petal.className = 'sakura';
-        let size = Math.random() * 12 + 6;
-        petal.style.width = size + 'px'; petal.style.height = size + 'px';
         petal.style.left = Math.random() * 100 + 'vw';
+        petal.style.width = Math.random() * 10 + 10 + 'px';
+        petal.style.height = petal.style.width;
         petal.style.animationDuration = Math.random() * 5 + 5 + 's';
-        petal.style.animationDelay = Math.random() * 5 + 's';
         document.body.appendChild(petal);
-      }
+        setTimeout(() => petal.remove(), 10000);
+      }, 400);
     }
     initDecoration();
+
+    // สร้างประกายวิ้งตามเมาส์
+    function createSparkle(e) {
+      let sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      sparkle.textContent = ['✨', '💖', '⭐', '🌸'][Math.floor(Math.random() * 4)];
+      let x = e.clientX || e.touches[0].clientX;
+      let y = e.clientY || e.touches[0].clientY;
+      sparkle.style.left = x + 'px';
+      sparkle.style.top = y + 'px';
+      document.body.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 800);
+    }
+
+    // สร้างกล่องของขวัญลอย
+    function spawnGift() {
+      if(!started) return;
+      let gift = document.createElement('div');
+      gift.className = 'gift';
+      gift.textContent = '🎁';
+      gift.style.left = Math.random() * 90 + 'vw';
+      gift.style.animationDuration = Math.random() * 3 + 4 + 's';
+      gift.onclick = (e) => {
+        e.stopPropagation();
+        confetti({ particleCount: 40, spread: 50, origin: { x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight } });
+        gift.remove();
+      };
+      document.body.appendChild(gift);
+      setTimeout(() => gift.remove(), 7000);
+    }
 
     let started = false;
     function startAll() {
@@ -162,32 +226,35 @@
       document.getElementById('overlay-curtain').classList.add('curtain-hidden');
       document.getElementById('msg-box').classList.add('message-active');
       
-      // พลุต้อนรับ
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#ffb7c5', '#ff4b91', '#ffffff'] });
+      confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#ffb7c5', '#ff4b91', '#ffffff'] });
+      setInterval(spawnGift, 2000);
     }
 
-    // ฟังก์ชันเป่าเทียนพร้อมลูกเล่นใหม่
+    // ฟังก์ชันเป่าเทียน
     function extinguish(e) {
       e.stopPropagation();
       const flame = document.getElementById('flame');
       const smoke = document.getElementById('smoke');
+      const bunny = document.getElementById('bunny');
       
       if (!flame.classList.contains('off')) {
         flame.classList.add('off');
-        smoke.classList.add('smoke-anim'); // เริ่มควัน
+        smoke.classList.add('smoke-anim');
+        bunny.classList.add('bunny-peek');
+        document.body.classList.add('shake');
+        setTimeout(() => document.body.classList.remove('shake'), 500);
         
-        // พลุจาก 3 ทิศทาง
+        // พลุจัดเต็ม
         var end = Date.now() + (2 * 1000);
         (function frame() {
-          confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ffb7c5', '#ff4b91'] });
-          confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#e0c3fc', '#ffffff'] });
-          confetti({ particleCount: 2, angle: 90, spread: 100, origin: { x: 0.5, y: 0.5 } });
+          confetti({ particleCount: 7, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ffb7c5', '#ff4b91'] });
+          confetti({ particleCount: 7, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#e0c3fc', '#ffffff'] });
           if (Date.now() < end) requestAnimationFrame(frame);
         }());
       }
     }
 
-    // Parallax Effect สำหรับเค้ก
+    // Parallax
     document.addEventListener('mousemove', (e) => {
       const box = document.getElementById('parallax-box');
       const x = (window.innerWidth / 2 - e.pageX) / 30;
