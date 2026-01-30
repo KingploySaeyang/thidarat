@@ -160,19 +160,19 @@
       
       <div id="view-gift" class="card">
         <h1>มีของขวัญมาส่งจ้า!</h1>
-        <p class="sub">ตั้งใจทำมาให้คนเก่งโดยเฉพาะเลยนะ</p>
+        <p class="sub">ตั้งใจทำมาให้กะธิโดยเฉพาะเลยนะ</p>
         <div class="giftStage">
           <div class="gift">
             <div class="bow"></div><div class="lid"></div><div class="ribbonV"></div><div class="box"></div>
           </div>
         </div>
-        <button class="btn" onclick="goToVerify()">กดรับของขวัญตรงนี้นะ อิอิ</button>
+        <button class="btn" onclick="goToVerify()">กดรับของขวัญตรงนี้นะจ๊ะ อุอิ</button>
       </div>
 
       <div id="view-verify" class="card hidden">
         <div style="font-size: 50px; margin-bottom: 10px;">🎂</div>
-        <h2 id="verify-title">ของขวัญนี้เป็นของใครนะ?</h2>
-        <p id="verify-desc" class="sub">ใส่วันที่เกิดของคุณ (เช่น 31)</p>
+        <h2 id="verify-title">ของขวัญวันนี้เป็นของใคร?</h2>
+        <p id="verify-desc" class="sub">วันนี้วันที่เท่าไหร่นะ</p>
         
         <div class="input-wrapper">
           <input type="number" id="userInput" placeholder="??" autocomplete="off">
@@ -238,12 +238,10 @@
     const desc = document.getElementById('verify-desc');
 
     if (currentStep === 2) {
-      title.innerText = "เกิดเดือนอะไรเอ่ย?";
-      desc.innerText = "ใส่ตัวเลขเดือนเกิดของคุณ (เช่น 1)";
+      title.innerText = "เดือนนี้ล่ะเดือนอารายย?";
       inputField.placeholder = "MM";
     } else if (currentStep === 3) {
-      title.innerText = "ปี พ.ศ. ที่คุณเกิดล่ะ?";
-      desc.innerText = "ระบุปีเป็น พ.ศ. นะ (เช่น 2544)";
+      title.innerText = "25 ปีที่แล้ว พ.ศ.ไรนะ";
       inputField.placeholder = "YYYY";
     } else {
       // เมื่อผ่านครบทุกด่าน
