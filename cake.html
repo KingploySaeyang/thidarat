@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>สุขสันต์วันเกิด ธิดารัตน์ 💖</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--stroke:rgba(255,255,255,.22);--shadow:0 18px 60px rgba(0,0,0,.25)}
+    *{box-sizing:border-box}
+    body{
+      margin:0;min-height:100vh;overflow:hidden;font-family:Prompt,system-ui;color:#fff;
+      background:
+        radial-gradient(1100px 600px at 20% 20%, rgba(255,255,255,.20), transparent 60%),
+        radial-gradient(900px 520px at 80% 35%, rgba(255,255,255,.14), transparent 60%),
+        linear-gradient(135deg,#ff4d7d,#7c3aed,#0ea5e9);
+    }
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px}
+    .card{
+      width:min(860px,100%);
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.10));
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      padding: 22px 18px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    h1{margin:0 0 8px;font-size:clamp(26px,4.3vw,44px);line-height:1.08}
+    p{margin:0;color:rgba(255,255,255,.88);line-height:1.6}
+    .cakeWrap{margin:12px auto 0;width:min(520px,100%);animation:float 2.4s ease-in-out infinite alternate}
+    @keyframes float{from{transform:translateY(8px)}to{transform:translateY(-6px)}}
+    .flame{transform-origin:center;animation:flick 0.12s ease-in-out infinite alternate;filter:drop-shadow(0 0 14px rgba(255,209,102,.65))}
+    @keyframes flick{from{transform:translateY(0) scale(1);opacity:.95}to{transform:translateY(-1px) scale(1.03);opacity:1}}
+
+    .fx{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:999}
+    .p{position:absolute;width:10px;height:14px;border-radius:3px;opacity:.95;transform:translateY(-10vh);animation:fall linear forwards;filter:drop-shadow(0 10px 12px rgba(0,0,0,.18))}
+    @keyframes fall{to{transform:translateY(120vh) rotate(540deg);opacity:.9}}
+  </style>
+</head>
+<body>
+  <div class="fx" id="fx"></div>
+
+  <div class="wrap">
+    <div class="card">
+      <h1>สุขสันต์วันเกิด ธิดารัตน์ 💖</h1>
+      <p>ขอให้มีความสุขมาก ๆ สุขภาพแข็งแรง สมหวังทุกอย่างนะ 💐</p>
+
+      <div class="cakeWrap" aria-label="Birthday Cake">
+        <svg viewBox="0 0 520 420">
+          <ellipse cx="260" cy="360" rx="170" ry="26" fill="rgba(0,0,0,.18)"/>
+          <ellipse cx="260" cy="356" rx="190" ry="34" fill="rgba(255,255,255,.10)"/>
+          <path d="M140 320 Q260 360 380 320 L380 250 Q260 290 140 250 Z" fill="rgba(255,255,255,.14)" />
+          <path d="M150 285 Q260 325 370 285 L370 180 Q260 220 150 180 Z" fill="rgba(255,255,255,.20)" />
+          <path d="M175 205 Q260 240 345 205 L345 130 Q260 160 175 130 Z" fill="rgba(255,255,255,.24)" />
+          <path d="M175 150 Q260 180 345 150
+                   Q332 165 320 160
+                   Q310 175 298 168
+                   Q284 190 272 180
+                   Q255 210 242 190
+                   Q228 175 216 182
+                   Q205 196 194 182
+                   Q184 168 175 170 Z" fill="rgba(255,255,255,.30)" />
+          <rect x="232" y="95" width="14" height="55" rx="7" fill="rgba(255,77,125,.90)"/>
+          <rect x="254" y="88" width="14" height="62" rx="7" fill="rgba(110,231,183,.90)"/>
+          <rect x="276" y="95" width="14" height="55" rx="7" fill="rgba(96,165,250,.90)"/>
+          <rect x="238" y="88" width="2.5" height="8" rx="1" fill="rgba(0,0,0,.55)"/>
+          <rect x="260" y="81" width="2.5" height="8" rx="1" fill="rgba(0,0,0,.55)"/>
+          <rect x="282" y="88" width="2.5" height="8" rx="1" fill="rgba(0,0,0,.55)"/>
+          <path class="flame" d="M239 84 C235 78, 238 72, 240 70 C242 72, 246 78, 242 84 C241 86, 240 86, 239 84 Z" fill="rgba(255,209,102,.98)"/>
+          <path class="flame" d="M261 77 C257 71, 260 65, 262 63 C264 65, 268 71, 264 77 C263 79, 262 79, 261 77 Z" fill="rgba(255,209,102,.98)"/>
+          <path class="flame" d="M283 84 C279 78, 282 72, 284 70 C286 72, 290 78, 286 84 C285 86, 284 86, 283 84 Z" fill="rgba(255,209,102,.98)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // prevent direct open
+  if(sessionStorage.getItem("gift_clicked") !== "1"){
+    location.href = "index.html";
+  }
+
+  // confetti
+  const fx = document.getElementById("fx");
+  const colors = [
+    "rgba(255, 209, 102, .95)",
+    "rgba(255, 77, 125, .95)",
+    "rgba(96, 165, 250, .95)",
+    "rgba(167, 139, 250, .95)",
+    "rgba(110, 231, 183, .95)",
+    "rgba(255,255,255,.92)"
+  ];
+  function confettiBurst(count=220){
+    const w = window.innerWidth;
+    for(let i=0;i<count;i++){
+      const p = document.createElement("div");
+      p.className = "p";
+      p.style.left = (Math.random()*w) + "px";
+      p.style.top = (-20 - Math.random()*120) + "px";
+      p.style.width = (7 + Math.random()*8) + "px";
+      p.style.height = (9 + Math.random()*10) + "px";
+      p.style.background = colors[(Math.random()*colors.length)|0];
+      p.style.animationDuration = (2.2 + Math.random()*1.8) + "s";
+      p.style.animationDelay = (Math.random()*0.15) + "s";
+      fx.appendChild(p);
+      p.addEventListener("animationend", ()=>p.remove());
+    }
+  }
+  confettiBurst(260);
+
+  // WebAudio Happy Birthday (play immediately; if blocked, user can tap anywhere to start)
+  let audioCtx = null;
+
+  function playTone(freq, startTime, duration, type="triangle"){
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, startTime);
+
+    gain.gain.setValueAtTime(0.0001, startTime);
+    gain.gain.exponentialRampToValueAtTime(0.20, startTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(startTime);
+    osc.stop(startTime + duration);
+  }
+
+  function playHappyBirthday(){
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if(audioCtx.state === "suspended") audioCtx.resume();
+
+    const t0 = audioCtx.currentTime + 0.02;
+    const bpm = 110;
+    const beat = 60 / bpm;
+
+    const N = { G4:392, A4:440, B4:493.88, C5:523.25, D5:587.33, E5:659.25, F5:698.46 };
+    const seq = [
+      [N.G4,1],[N.G4,1],[N.A4,2],[N.G4,2],[N.C5,2],[N.B4,4],
+      [N.G4,1],[N.G4,1],[N.A4,2],[N.G4,2],[N.D5,2],[N.C5,4],
+      [N.G4,1],[N.G4,1],[N.G4,2],[N.E5,2],[N.C5,2],[N.B4,2],[N.A4,4],
+      [N.F5,1],[N.F5,1],[N.E5,2],[N.C5,2],[N.D5,2],[N.C5,4]
+    ];
+
+    let t = t0;
+    for(const [f, beats] of seq){
+      const dur = beat * beats * 0.92;
+      playTone(f, t, dur);
+      t += beat * beats;
+    }
+  }
+
+  function tryAutoplay(){
+    try{
+      playHappyBirthday();
+    }catch(e){
+      // ignore; fallback below
+    }
+  }
+  tryAutoplay();
+
+  // Fallback: tap anywhere to start (only if browser blocks)
+  window.addEventListener("pointerdown", () => {
+    tryAutoplay();
+  }, { once:true });
+</script>
+</body>
+</html>

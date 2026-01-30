@@ -1,109 +1,268 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>สำหรับธิดารัตน์ 💖</title>
-<style>
-body{
-  margin:0;
-  font-family: 'Prompt', sans-serif;
-  background: linear-gradient(135deg,#ff9a9e,#fad0c4);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  text-align:center;
-  color:#fff;
-}
-.card{
-  background: rgba(255,255,255,0.15);
-  padding:30px;
-  border-radius:20px;
-  backdrop-filter: blur(10px);
-  width:90%;
-  max-width:400px;
-}
-input{
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  width:80%;
-  margin:10px 0;
-  font-size:16px;
-  text-align:center;
-}
-button{
-  padding:10px 20px;
-  border:none;
-  border-radius:10px;
-  background:#ff4e50;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-}
-.cake{
-  font-size:80px;
-  margin:20px 0;
-  animation: bounce 1s infinite alternate;
-}
-@keyframes bounce{
-  from{transform:translateY(0)}
-  to{transform:translateY(-15px)}
-}
-.candle{
-  font-size:30px;
-  animation: flicker 0.2s infinite alternate;
-}
-@keyframes flicker{
-  from{opacity:1}
-  to{opacity:0.5}
-}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ของขวัญสำหรับกะธิอิอุ 💖</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#fff0f6; 
+      --bg2:#f3e7ff; 
+      --bg3:#ffe3ec;
+      --card: rgba(255, 255, 255, 0.85);
+      --hot1:#ff7eb3;
+      --hot2:#ff758c;
+      --text:#4a3a45;
+      --muted: rgba(74, 58, 69, 0.6);
+    }
+
+    *{box-sizing:border-box}
+    
+    body{
+      margin:0;
+      font-family:"Prompt", sans-serif;
+      height:100vh;
+      overflow:hidden;
+      color:var(--text);
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 182, 193, 0.4) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(230, 190, 255, 0.4) 0%, transparent 40%),
+        linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
+    }
+
+    /* Floating Hearts */
+    .hearts{position:fixed; inset:0; pointer-events:none; z-index: 0;}
+    .h{
+      position:absolute;
+      opacity:0;
+      animation: rise linear forwards;
+    }
+    @keyframes rise{
+      0%{ transform: translateY(110vh) scale(0.5); opacity: 0; }
+      20%{ opacity: 0.8; }
+      100%{ transform: translateY(-20vh) translateX(var(--dx)) scale(1.5); opacity: 0; }
+    }
+
+    .wrap{
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .phone{
+      width:min(400px, 100%);
+      perspective: 1000px;
+    }
+
+    .card{
+      border-radius: 35px;
+      background: var(--card);
+      backdrop-filter: blur(15px);
+      border: 2px solid rgba(255,255,255,1);
+      box-shadow: 0 25px 50px -12px rgba(255, 105, 180, 0.25);
+      padding: 30px 20px;
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+
+    h1, h2{
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+      background: linear-gradient(to right, #ff4b91, #ff7eb3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .sub{
+      margin: 10px 0 20px;
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    /* Gift Box Animation */
+    .giftStage{ padding: 20px 0; }
+    .gift{
+      width: 180px;
+      height: 150px;
+      margin: 0 auto;
+      position: relative;
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 50%, 100% { transform: scale(1) rotate(0deg); }
+      25% { transform: scale(1.05) rotate(2deg); }
+      75% { transform: scale(1.05) rotate(-2deg); }
+    }
+
+    .box, .lid{ background: white; border: 1px solid #ffe3ec; position: absolute; left: 50%; transform: translateX(-50%); }
+    .box{ bottom:0; width: 150px; height: 100px; border-radius: 15px; box-shadow: 0 10px 20px rgba(255, 182, 193, 0.3); }
+    .lid{ top:25px; width: 160px; height: 40px; border-radius: 10px; z-index: 2; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+    .ribbonV { position:absolute; left:50%; top:25px; transform:translateX(-50%); width: 30px; height: 125px; background: linear-gradient(#ff4b91, #ff7eb3); border-radius: 5px; z-index: 1; }
+    .bow { position:absolute; top:10px; left:50%; transform:translateX(-50%); width: 80px; height: 40px; z-index: 3; }
+    .bow:before, .bow:after { content: ""; position: absolute; width: 45px; height: 35px; background: #ff4b91; border-radius: 50% 50% 10% 50%; }
+    .bow:before { left: -5px; transform: rotate(-10deg); }
+    .bow:after { right: -5px; transform: rotate(100deg); }
+
+    /* Input Styling */
+    .input-wrapper { display: flex; justify-content: center; margin-bottom: 20px; }
+    input {
+      width: 130px;
+      padding: 12px;
+      border-radius: 18px;
+      border: 2px solid #eee;
+      font-size: 22px;
+      text-align: center;
+      outline: none;
+      font-weight: 700;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+    input:focus { border-color: var(--hot1); box-shadow: 0 0 10px rgba(255,126,179,0.2); }
+
+    .btn{
+      width:100%;
+      padding: 16px;
+      border-radius: 20px;
+      border: none;
+      background: linear-gradient(45deg, var(--hot1), var(--hot2));
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(255, 117, 140, 0.4);
+      transition: all 0.2s;
+    }
+    .btn:active{ transform: scale(0.95); }
+
+    .error { color: #ff4d4d; font-size: 13px; margin-top: 10px; display: none; font-weight: 600; }
+    
+    /* Utility */
+    .hidden { display: none; }
+    .fade-out { opacity: 0; transform: scale(0.9); }
+  </style>
 </head>
+
 <body>
+  <div class="hearts" id="hearts"></div>
 
-<div class="card" id="step1">
-  <h2>กรุณาใส่วันเกิด 🎂</h2>
-  <input type="number" id="day" placeholder="วัน (1-31)">
-  <br>
-  <button onclick="nextStep(1)">ส่ง</button>
-</div>
+  <div class="wrap">
+    <div class="phone">
+      
+      <div id="view-gift" class="card">
+        <h1>มีของขวัญมาส่งจ้า!</h1>
+        <p class="sub">ตั้งใจทำมาให้คนเก่งโดยเฉพาะเลยนะ</p>
+        <div class="giftStage">
+          <div class="gift">
+            <div class="bow"></div><div class="lid"></div><div class="ribbonV"></div><div class="box"></div>
+          </div>
+        </div>
+        <button class="btn" onclick="goToVerify()">กดรับของขวัญตรงนี้นะ อิอิ</button>
+      </div>
 
-<div class="card" id="step2" style="display:none">
-  <h2>กรุณาใส่เดือนเกิด 🌸</h2>
-  <input type="number" id="month" placeholder="เดือน (1-12)">
-  <br>
-  <button onclick="nextStep(2)">ส่ง</button>
-</div>
+      <div id="view-verify" class="card hidden">
+        <div style="font-size: 50px; margin-bottom: 10px;">🎂</div>
+        <h2 id="verify-title">ของขวัญนี้เป็นของใครนะ?</h2>
+        <p id="verify-desc" class="sub">ใส่วันที่เกิดของคุณ (เช่น 31)</p>
+        
+        <div class="input-wrapper">
+          <input type="number" id="userInput" placeholder="??" autocomplete="off">
+        </div>
 
-<div class="card" id="step3" style="display:none">
-  <h2>กรุณาใส่ปีเกิด 🎉</h2>
-  <input type="number" id="year" placeholder="ปี พ.ศ.">
-  <br>
-  <button onclick="showBirthday()">ส่ง</button>
-</div>
+        <div id="error" class="error">ข้อมูลไม่ถูกต้อง ลองใหม่อีกครั้งนะ 🥺</div>
+        <button class="btn" onclick="checkStep()">ยืนยันความถูกต้อง ✨</button>
+      </div>
 
-<div class="card" id="birthday" style="display:none">
-  <h1>สุขสันต์วันเกิด ธิดารัตน์ 💖</h1>
-  <div class="cake">🎂</div>
-  <div class="candle">🕯️🕯️🕯️</div>
-  <p>ขอให้มีความสุขมากๆ สุขภาพแข็งแรง สมหวังทุกอย่างนะ</p>
-</div>
-
-<audio id="song" src="https://www2.cs.uic.edu/~i101/SoundFiles/HappyBirthday.wav"></audio>
+    </div>
+  </div>
 
 <script>
-function nextStep(step){
-  document.getElementById("step"+step).style.display="none";
-  document.getElementById("step"+(step+1)).style.display="block";
-}
-function showBirthday(){
-  document.getElementById("step3").style.display="none";
-  document.getElementById("birthday").style.display="block";
-  document.getElementById("song").play();
-}
-</script>
+  // --- ระบบอิโมจิเด้งตลอดเวลา ---
+  const heartsContainer = document.getElementById("hearts");
+  const icons = ["💗","✨","🌸","☁️","🎁","💖"];
+  
+  function spawnHearts(){
+    const el = document.createElement("div");
+    el.className = "h";
+    el.textContent = icons[Math.floor(Math.random()*icons.length)];
+    el.style.left = (Math.random()*100) + "vw";
+    el.style.fontSize = (15 + Math.random()*20) + "px";
+    el.style.setProperty("--dx", (Math.random()*200 - 100) + "px");
+    el.style.animationDuration = (3 + Math.random()*3) + "s";
+    heartsContainer.appendChild(el);
+    el.addEventListener("animationend", () => el.remove());
+  }
+  setInterval(spawnHearts, 400);
 
+  // --- ระบบสลับหน้าและตรวจสอบข้อมูล ---
+  let currentStep = 1;
+  const answers = { 1: "31", 2: "1", 3: "2544" };
+  const inputField = document.getElementById('userInput');
+
+  function goToVerify() {
+    const giftView = document.getElementById('view-gift');
+    const verifyView = document.getElementById('view-verify');
+    
+    giftView.classList.add('fade-out');
+    setTimeout(() => {
+      giftView.classList.add('hidden');
+      verifyView.classList.remove('hidden');
+      inputField.focus();
+    }, 400);
+  }
+
+  function checkStep() {
+    const errorEl = document.getElementById('error');
+    if (inputField.value.trim() === answers[currentStep]) {
+      errorEl.style.display = 'none';
+      nextStep();
+    } else {
+      errorEl.style.display = 'block';
+      inputField.style.borderColor = '#ff4d4d';
+    }
+  }
+
+  function nextStep() {
+    currentStep++;
+    inputField.value = '';
+    const title = document.getElementById('verify-title');
+    const desc = document.getElementById('verify-desc');
+
+    if (currentStep === 2) {
+      title.innerText = "เกิดเดือนอะไรเอ่ย?";
+      desc.innerText = "ใส่ตัวเลขเดือนเกิดของคุณ (เช่น 1)";
+      inputField.placeholder = "MM";
+    } else if (currentStep === 3) {
+      title.innerText = "ปี พ.ศ. ที่คุณเกิดล่ะ?";
+      desc.innerText = "ระบุปีเป็น พ.ศ. นะ (เช่น 2544)";
+      inputField.placeholder = "YYYY";
+    } else {
+      // เมื่อผ่านครบทุกด่าน
+      document.getElementById('view-verify').innerHTML = `
+        <div style="font-size: 60px; margin-bottom: 15px;">🔊</div>
+        <h2>ยืนยันสำเร็จ!</h2>
+        <p class="sub" style="font-weight: 600;">กรุณาเปิดเสียงลำโพงให้สุด <br> เพื่อรับเซอร์ไพรส์ด้วยนะ ✨</p>
+      `;
+      setTimeout(() => {
+        // ลิงก์ไปยังหน้าสุดท้าย (เค้ก)
+        location.href = "final_surprise.html";
+      }, 3000);
+    }
+  }
+
+  // รองรับการกด Enter
+  inputField.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") checkStep();
+  });
+</script>
 </body>
 </html>
